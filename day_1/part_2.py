@@ -1,8 +1,6 @@
-measurements = []
-
-
 def read_input():
     file = open("input.in", 'r')
+    measurements = []
 
     for line in file.readlines():
         measurements.append(int(line))
@@ -10,7 +8,7 @@ def read_input():
     return measurements
 
 
-def count_windows():
+def count_windows(measurements):
     counter = 0
 
     for i, number in enumerate(measurements):
@@ -24,8 +22,7 @@ def count_windows():
 
 
 def main():
-    read_input()
-    print(count_windows())
+    print(count_windows(read_input()))
 
 
 main()
