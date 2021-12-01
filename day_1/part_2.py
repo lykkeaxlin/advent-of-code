@@ -11,7 +11,7 @@ def read_input():
 def count_windows(measurements):
     counter = 0
 
-    for i, number in enumerate(measurements):
+    for i in range(len(measurements)):
         sum_fst_window = sum(measurements[i:i+3])
         sum_snd_window = sum(measurements[i+1:i+4])
 
