@@ -1,29 +1,47 @@
-import math
+def part_one(measurements):
+    horizontal, depth = 0, 0
 
-
-def read_input():
-    file = open("input.in", 'r')
-    horizontal = 0
-    depth = 0
-    aim = 0
-
-    for line in file.readlines():
-        direction = line.split()[0]
-        value = int(line.split()[1])
-
+    for direction, value in measurements:
         if direction.startswith("f"):
             horizontal += value
-            depth -= aim*value
+        elif direction.startswith("d"):
+            depth += value
+        elif direction.startswith("u"):
+            depth -= value
+
+    return horizontal * abs(depth)
+
+
+def part_two(measurements):
+    horizontal, depth, aim = 0, 0, 0
+
+    for direction, value in measurements:
+        if direction.startswith("f"):
+            horizontal += value
+            depth -= aim * value
         elif direction.startswith("d"):
             aim += value
         elif direction.startswith("u"):
             aim -= value
 
-    return horizontal * math.fabs(depth)
+    return horizontal * abs(depth)
+
+
+def read_input():
+    file = open("input.in", 'r')
+    measurements = []
+
+    for line in file.readlines():
+        direction, value = line.split()
+        measurements.append((direction, int(value)))
+
+    return measurements
 
 
 def main():
-    print(read_input())
+    measurements = read_input()
+    print("Part 1:", part_one(measurements))
+    print("Part 2:", part_two(measurements))
 
 
 main()
