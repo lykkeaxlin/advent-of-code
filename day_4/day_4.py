@@ -41,7 +41,6 @@ def part_one(numbers, boards):
 
 
 def part_two(numbers, boards):
-    winner_score = 0
     winning_boards = set()
 
     for n in numbers:
@@ -61,7 +60,7 @@ def part_two(numbers, boards):
                                 if len(winning_boards) == len(boards):
                                     return sum_unmarked(board) * n
 
-    return winner_score
+    return o
 
 
 def parse_line(file):
