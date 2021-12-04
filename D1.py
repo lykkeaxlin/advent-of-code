@@ -24,7 +24,7 @@ def count_window(measurements):
 
 
 def read_input():
-    file = open("input.in", 'r')
+    file = open("day_1/input.in", 'r')
     measurements = []
 
     for line in file.readlines():

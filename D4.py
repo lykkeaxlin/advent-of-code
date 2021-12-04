@@ -68,7 +68,7 @@ def parse_line(file):
 
 
 def read_input():
-    file = open("input.in", 'r')
+    file = open("day_4/input.in", 'r')
     boards = []
     numbers = list(map(int, file.readline().split(",")))
     _ = file.readline()
