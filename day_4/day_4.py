@@ -47,16 +47,18 @@ def part_two(numbers, boards):
     for n in numbers:
         for board_nbr in range(len(boards)):
 
-            for i in range(5):
-                for j in range(5):
-                    if boards[board_nbr][i][j] == n:
-                        boards[board_nbr][i][j] = -1
+            if board_nbr not in winning_boards:
 
-                        if is_winner_col(boards[board_nbr], j) or is_winner_row(boards[board_nbr], i):
-                            winning_boards.add(board_nbr)
+                for i in range(5):
+                    for j in range(5):
+                        if boards[board_nbr][i][j] == n:
+                            boards[board_nbr][i][j] = -1
 
-                            if len(winning_boards) == len(boards):
-                                return sum_unmarked(boards[board_nbr]) * n
+                            if is_winner_col(boards[board_nbr], j) or is_winner_row(boards[board_nbr], i):
+                                winning_boards.add(board_nbr)
+
+                                if len(winning_boards) == len(boards):
+                                    return sum_unmarked(boards[board_nbr]) * n
 
     return winner_score
 
