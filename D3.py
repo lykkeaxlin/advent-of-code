@@ -60,7 +60,7 @@ def part_two(measurements):
 
 
 def read_input():
-    file = open("day_3/input.in", 'r')
+    file = open("input.in", 'r')
     measurements = []
 
     for line in file.readlines():
