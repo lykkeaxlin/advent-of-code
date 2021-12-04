@@ -60,7 +60,7 @@ def part_two(numbers, boards):
                                 if len(winning_boards) == len(boards):
                                     return sum_unmarked(board) * n
 
-    return o
+    return 0
 
 
 def parse_line(file):
