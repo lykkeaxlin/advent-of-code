@@ -1,9 +1,9 @@
-def part_one(measurements, days):
+def part_one(fish, days):
     next_day = []
     counter = 0
 
     for x in range(days):
-        for n in measurements:
+        for n in fish:
             if n == 0:
                 counter += 1
                 next_day.append(6)
@@ -13,31 +13,31 @@ def part_one(measurements, days):
         for c in range(counter):
             next_day.append(8)
 
-        measurements = next_day
+        fish = next_day
         next_day = []
         counter = 0
 
-    return len(measurements)
+    return len(fish)
 
 
 # part one does not terminate for n=256
 def part_two(init_fish, days):
-    days_remaining = []
+    fish = []
     for i in range(9):
-        days_remaining.append(init_fish.count(i))
+        fish.append(init_fish.count(i))
 
-    for i in range(days):
-        new_fish = days_remaining[0]
+    for _ in range(days):
+        new_fish = fish[0]
 
-        for x in range(9):
-            if x == 6:
-                days_remaining[x] = days_remaining[x+1] + new_fish
-            elif x == 8:
-                days_remaining[x] = new_fish
+        for i in range(9):
+            if i == 6:
+                fish[i] = fish[i+1] + new_fish
+            elif i == 8:
+                fish[i] = new_fish
             else:
-                days_remaining[x] = days_remaining[x+1]
+                fish[i] = fish[i+1]
 
-    return sum(days_remaining)
+    return sum(fish)
 
 
 def read_input():
