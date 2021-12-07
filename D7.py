@@ -21,9 +21,9 @@ def part_two(positions):
             n = abs(pos - x_pos)
             fuel += n * (n + 1) / 2  # sum of natural numbers: [n(n+1)]/2
 
-        fuels.append(fuel)
+        fuels.append(int(fuel))
 
-    return int(min(fuels))
+    return min(fuels)
 
 
 def read_input():
