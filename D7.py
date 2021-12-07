@@ -34,8 +34,8 @@ def read_input():
 
 def main():
     positions = read_input()
-    print("part 1:", part_one(positions))
-    print("part 2:", part_two(positions))
+    print("Part 1:", part_one(positions))
+    print("Part 2:", part_two(positions))
 
 
 main()
