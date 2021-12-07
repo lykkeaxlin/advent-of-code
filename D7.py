@@ -5,8 +5,8 @@ def part_one(positions):
     median = int(statistics.median(positions))
     fuel = 0
 
-    for nbr in positions:
-        fuel += abs(nbr - median)
+    for pos in positions:
+        fuel += abs(pos - median)
 
     return fuel
 
