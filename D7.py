@@ -11,7 +11,6 @@ def part_one(positions):
     return fuel
 
 
-# sum of natural numbers: [n(n+1)]/2
 def part_two(positions):
     fuels = []
 
@@ -20,7 +19,7 @@ def part_two(positions):
 
         for pos in positions:
             n = abs(pos - x_pos)
-            fuel += n * (n + 1) / 2
+            fuel += n * (n + 1) / 2  # sum of natural numbers: [n(n+1)]/2
 
         fuels.append(fuel)
 
