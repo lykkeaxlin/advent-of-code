@@ -88,7 +88,7 @@ def part_two(signals, outputs):
         decoded = dict((v, k) for k, v in decode(signal).items())  # invert key, value
 
         for out in outputs[i]:
-            value += str(decoded.get(''.join(sorted(out))))
+            value += str(decoded.get(sort_signal(out)))
 
         sum += int(value)
         value = ""
