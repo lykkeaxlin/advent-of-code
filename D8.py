@@ -54,7 +54,6 @@ def decode(signal):
 
 
 def remove_substring(signal, characters):
-
     for char in characters:
         signal = signal.replace(char, '')
 
