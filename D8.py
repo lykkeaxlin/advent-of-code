@@ -30,37 +30,25 @@ def decode(signal):
         else:  # candidates for 2, 3 and 5
             encoded_numbers.setdefault(5, []).append(sort_signal(sig))
 
-    # find 9: 4 is substring of 9
+    # find 0, 6 and 9 (len == 6)
     for number in encoded_numbers.get(6):
-        if contains_characters(number, decoded_numbers.get(4)):
-            decoded_numbers[9] = ''.join(sorted(number))
-            encoded_numbers.get(6).remove(number)
-
-    # find 0 and 6: 1 is substring of one of them
-    for number in encoded_numbers.get(6):
-
-        if contains_characters(number, decoded_numbers.get(1)):
+        if is_substring(number, decoded_numbers.get(4)):    # 4 is substring of 9
+            decoded_numbers[9] = sort_signal(number)
+        elif is_substring(number, decoded_numbers.get(1)):  # 1 is substring of 0
             decoded_numbers[0] = sort_signal(number)
         else:
-            decoded_numbers[6] = sort_signal(number)
+            decoded_numbers[6] = sort_signal(number)        # else 6
 
-    # find 3: 1 is substring of 3
-    for number in encoded_numbers.get(5):
-
-        if contains_characters(number, decoded_numbers.get(1)):
-            decoded_numbers[3] = sort_signal(number)
-            encoded_numbers.get(5).remove(number)
-
-    # find bottom left
     bottom_left = remove_substring(decoded_numbers.get(8), decoded_numbers.get(9))
 
-    # find 2 and 5: 2 contains bottom left piece
+    # find 2, 3 and 5 (len == 5)
     for number in encoded_numbers.get(5):
-
-        if contains_characters(number, bottom_left):
+        if is_substring(number, decoded_numbers.get(1)):    # 1 is substring of 3
+            decoded_numbers[3] = sort_signal(number)
+        elif is_substring(number, bottom_left):             # 2 contains bottom left piece
             decoded_numbers[2] = sort_signal(number)
         else:
-            decoded_numbers[5] = sort_signal(number)
+            decoded_numbers[5] = sort_signal(number)        # else 5
 
     return decoded_numbers
 
@@ -73,7 +61,7 @@ def remove_substring(signal, characters):
     return signal
 
 
-def contains_characters(signal, characters):
+def is_substring(signal, characters):
     for char in characters:
         if char not in signal:
             return False
@@ -87,8 +75,8 @@ def part_two(signals, outputs):
     for i, signal in enumerate(signals):
         decoded = dict((v, k) for k, v in decode(signal).items())  # invert key, value
 
-        for out in outputs[i]:
-            value += str(decoded.get(sort_signal(out)))
+        for output in outputs[i]:
+            value += str(decoded.get(sort_signal(output)))
 
         sum += int(value)
         value = ""
