@@ -35,7 +35,6 @@ def part_two(points):
     basins = []
     _, low_points_coords = part_one(points)
 
-    # go through all low points
     for i, j in low_points_coords:
         basins.append(get_basin(i, j, set(), points))
 
@@ -46,18 +45,18 @@ def get_res(basins):
     return reduce((lambda x, y: x * y), sorted(basins, reverse=True)[:3])
 
 
-def get_basin(i, j, current_basin, points):
+def get_basin(i, j, basin, points):
 
     # add point if not wall (=9) and not visited
-    if points[i][j] != 9 and (i, j) not in current_basin:
-        current_basin.add((i, j))
+    if points[i][j] != 9 and (i, j) not in basin:
+        basin.add((i, j))
 
         # continue with its neighbours until wall reached for all
         _, coord = get_neigh_and_coords(i, j, points)
         for x, y in coord:
-            get_basin(x, y, current_basin, points)
+            get_basin(x, y, basin, points)
 
-    return len(current_basin)
+    return len(basin)
 
 
 def read_input():
