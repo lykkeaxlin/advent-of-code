@@ -2,15 +2,16 @@ from functools import reduce
 
 
 def part_one(points):
-    lows = []
+    low_points, coords = [], []  # coordinates used for part 2
 
     for i in range(len(points)):
         for j in range(len(points[0])):
             neigh, _ = get_neigh_and_coords(i, j, points)
             if points[i][j] < min(neigh):
-                lows.append(points[i][j])
+                low_points.append(points[i][j]+1)
+                coords.append((i, j))
 
-    return sum(lows) + len(lows)
+    return sum(low_points), coords
 
 
 # get neighbours and their corresponding coordinates for a given point
@@ -30,22 +31,9 @@ def get_neigh_and_coords(i, j, points):
     return neighbours, coordinates
 
 
-# same as part one but returns coordinates instead of value
-def get_low_points_coord(points):
-    lows = []
-
-    for i in range(len(points)):
-        for j in range(len(points[0])):
-            neigh, _ = get_neigh_and_coords(i, j, points)
-            if points[i][j] < min(neigh):
-                lows.append((i, j))
-
-    return lows
-
-
 def part_two(points):
     basins = []
-    low_points_coords = get_low_points_coord(points)
+    _, low_points_coords = part_one(points)
 
     # go through all low points
     for i, j in low_points_coords:
@@ -85,7 +73,7 @@ def read_input():
 
 def main():
     points = read_input()
-    print("Part 1:", part_one(points))
+    print("Part 1:", part_one(points)[0])
     print("Part 2:", part_two(points))
 
 
