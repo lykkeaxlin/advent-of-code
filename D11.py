@@ -56,7 +56,7 @@ def part_one(matrix):
 
 
 def has_all_flashed(matrix):
-    return np.count_nonzero(np.array(matrix)) == 0
+    return not np.any(np.array(matrix))
 
 
 def part_two(matrix):
