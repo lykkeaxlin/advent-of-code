@@ -11,8 +11,7 @@ def flash(row, col, flashed, matrix, counter=0):
             if matrix[row][col] > 9:
                 flashed.add((row, col))
                 matrix[row][col] = 0
-                counter += 1
-                counter = flash(row, col, flashed, matrix, counter)
+                counter = 1 + flash(row, col, flashed, matrix, counter)
 
     return counter
 
@@ -56,8 +55,7 @@ def part_one(matrix):
                 if matrix[row][col] > 9:
                     flashed.add((row, col))
                     matrix[row][col] = 0
-                    counter += 1
-                    counter = flash(row, col, flashed, matrix, counter)
+                    counter = 1 + flash(row, col, flashed, matrix, counter)
 
     return counter
 
