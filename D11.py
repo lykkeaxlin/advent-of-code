@@ -16,28 +16,28 @@ def flash(row, col, flashed, matrix, counter=0):
     return counter
 
 
-def increment_board(points):
+def increment_matrix(matrix):
     for row in range(ROWS):
         for col in range(COLS):
-            points[row][col] += 1
+            matrix[row][col] += 1
 
 
-def has_all_flashed(points):
+def has_all_flashed(matrix):
     for row in range(ROWS):
         for col in range(COLS):
-            if points[row][col] != 0:
+            if matrix[row][col] != 0:
                 return False
     return True
 
 
-def get_neighbours(i, j):
+def get_neighbours(row, col):
     coordinates = []
-    x_min, x_max = max(0, i - 1), min(ROWS - 1, i + 1)
-    y_min, y_max = max(0, j - 1), min(COLS - 1, j + 1)
+    x_min, x_max = max(0, row - 1), min(ROWS - 1, row + 1)
+    y_min, y_max = max(0, col - 1), min(COLS - 1, col + 1)
 
     for x in range(x_min, x_max + 1):
         for y in range(y_min, y_max + 1):
-            if not (x == i and j == y):
+            if not (x == row and col == y):
                 coordinates.append((x, y))
 
     return coordinates
@@ -47,7 +47,7 @@ def part_one(matrix):
     counter = 0
 
     for _ in range(100):
-        increment_board(matrix)
+        increment_matrix(matrix)
         flashed = set()
 
         for row in range(ROWS):
@@ -64,7 +64,7 @@ def part_two(matrix):
     step = 0
 
     while not has_all_flashed(matrix):
-        increment_board(matrix)
+        increment_matrix(matrix)
         flashed = set()
 
         for row in range(ROWS):
