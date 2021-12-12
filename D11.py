@@ -1,3 +1,6 @@
+import numpy as np
+
+
 ROWS, COLS = 10, 10
 
 
@@ -16,18 +19,10 @@ def flash(row, col, flashed, matrix, counter=0):
     return counter
 
 
-def increment_matrix(matrix):
+def increment_all(matrix):
     for row in range(ROWS):
         for col in range(COLS):
             matrix[row][col] += 1
-
-
-def has_all_flashed(matrix):
-    for row in range(ROWS):
-        for col in range(COLS):
-            if matrix[row][col] != 0:
-                return False
-    return True
 
 
 def get_neighbours(row, col):
@@ -47,7 +42,7 @@ def part_one(matrix):
     counter = 0
 
     for _ in range(100):
-        increment_matrix(matrix)
+        increment_all(matrix)
         flashed = set()
 
         for row in range(ROWS):
@@ -60,11 +55,15 @@ def part_one(matrix):
     return counter
 
 
+def has_all_flashed(matrix):
+    return np.count_nonzero(np.array(matrix)) == 0
+
+
 def part_two(matrix):
     step = 0
 
     while not has_all_flashed(matrix):
-        increment_matrix(matrix)
+        increment_all(matrix)
         flashed = set()
 
         for row in range(ROWS):
