@@ -67,10 +67,9 @@ def format_board(board):
 
 
 def read_input():
-    file = open("input13.in", 'r')
-    rows, cols = [], []
+    file = open("input.in", 'r')
+    rows, cols, instructions = [], [], []
     line = file.readline().strip()
-    instructions = []
 
     while line != '\n':
         splitted = list(map(int, line.strip().split(",")))
