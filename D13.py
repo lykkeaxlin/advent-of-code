@@ -1,16 +1,15 @@
 import numpy as np
-desired_width = 320
-np.set_printoptions(linewidth = desired_width)  # format print
+np.set_printoptions(linewidth=320)  # format print
 
 
-def part_one(rows, cols, coordinates, instructions):
+def part_one(rows, cols, coordinates, instruction):
     board = init_board(rows, cols, coordinates)
+    dir, value = instruction
 
-    splitted = instructions[0].strip().split("=")
-    if splitted[0][-1] == 'y':
-        board = fold_y(int(splitted[1]), rows, board)
+    if 'y' in dir:
+        board = fold_y(int(value), rows, board)
     else:
-        board = fold_x(int(splitted[1]), cols, board)
+        board = fold_x(int(value), cols, board)
 
     return np.count_nonzero(board)
 
@@ -18,12 +17,11 @@ def part_one(rows, cols, coordinates, instructions):
 def part_two(rows, cols, coordinates, instructions):
     board = init_board(rows, cols, coordinates)
 
-    for instruction in instructions:
-        splitted = instruction.strip().split("=")
-        if splitted[0][-1] == 'y':
-            board = fold_y(int(splitted[1]), len(board)-1, board)
+    for dir, value in instructions:
+        if 'y' in dir:
+            board = fold_y(int(value), len(board)-1, board)
         else:
-            board = fold_x(int(splitted[1]), len(board[0])-1, board)
+            board = fold_x(int(value), len(board[0])-1, board)
 
     return np.array(format_board(board))
 
@@ -69,7 +67,7 @@ def format_board(board):
 
 
 def read_input():
-    file = open("input.in", 'r')
+    file = open("input13.in", 'r')
     rows, cols = [], []
     line = file.readline().strip()
     instructions = []
@@ -81,14 +79,14 @@ def read_input():
         line = file.readline()
 
     for line in file.readlines():
-        instructions.append(line.strip())
+        instructions.append(line.strip().split("="))
 
     return max(rows), max(cols), list(zip(cols, rows)), instructions
 
 
 def main():
     template, mappings, coordinates, instructions = read_input()
-    print("Part 1:", part_one(template, mappings, coordinates, instructions))
+    print("Part 1:", part_one(template, mappings, coordinates, instructions[0]))
     print("Part 2:\n", part_two(template, mappings, coordinates, instructions))  # RLBCJGLU
 
 
