@@ -15,9 +15,11 @@ def get_bits_str(packet, bits):
 
 def parse_literal(packets):
     packet = ""
+
     while packets[0] == "1":
         pkt, packets = packets[1:5], get_bits_nbr(packets, 5)[1]
         packet += pkt
+
     pkt, packets = packets[1:5], get_bits_nbr(packets, 5)[1]
     packet += pkt
     return int(packet, 2), packets
@@ -40,6 +42,7 @@ def part_one(packets):
                 versions_sum += sub_version
         else:
             length, packets = get_bits_nbr(packets, 11)
+
             for _ in range(length):
                 sub_version, packets = part_one(packets)
                 versions_sum += sub_version
@@ -57,23 +60,23 @@ def part_two(packets):
     else:
         values = []
         mode, packets = get_bits_nbr(packets, 1)
+
         if mode == 0:
             length, packets = get_bits_nbr(packets, 15)
             sub_packet, packets = get_bits_str(packets, length)
 
             while sub_packet:
-                sub_version, sub_packet, sub_value = part_two(sub_packet)
-                version += sub_version
+                sub_value, sub_packet = part_two(sub_packet)
                 values.append(sub_value)
         else:
             length, packets = get_bits_nbr(packets, 11)
+
             for _ in range(length):
-                sub_version, packets, sub_value = part_two(packets)
-                version += sub_version
+                sub_value, packets = part_two(packets)
                 values.append(sub_value)
 
         values_sum = op(values, values_sum, type)
-    return version, packets, values_sum
+    return values_sum, packets
 
 
 def op(values, value, type):
@@ -103,7 +106,7 @@ def read_input():
 def main():
     input = read_input()
     print("Part 1:", part_one(hex_to_bin(input))[0])
-    print("Part 2:", part_two(hex_to_bin(input))[2])
+    print("Part 2:", part_two(hex_to_bin(input))[0])
 
 
 main()
