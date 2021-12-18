@@ -18,12 +18,12 @@ def find_max_y(vel_x, vel_y, x_range, y_range):
     while True:
         x += vel_x
         y += vel_y
+        vel_y -= 1
 
         if vel_x > 0:
             vel_x -= 1
         elif vel_x < 0:
             vel_x += 1
-        vel_y -= 1
 
         max_y = max(y, max_y)
 
