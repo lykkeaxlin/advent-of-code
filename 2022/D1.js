@@ -25,8 +25,10 @@ const getMax = (cals) => {
 };
 
 const secondPart = (cals) => {
-  const top = cals.sort((a, b) => a - b).reverse();
-  return top.slice(0, 3).reduce((a, b) => a + b, 0);
+  return cals
+    .sort((a, b) => b - a)
+    .slice(0, 3)
+    .reduce((a, b) => a + b, 0);
 };
 
 const input = readFile();
