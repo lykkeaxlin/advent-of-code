@@ -1,8 +1,12 @@
 var fs = require("fs");
 
+const test = true;
+
 const readFile = () => {
-  //return fs.readFileSync("test.in").toString().split("\n");
-  return fs.readFileSync("input.in").toString().split("\n");
+  return fs
+    .readFileSync(test ? "test.in" : "input.in")
+    .toString()
+    .split("\n");
 };
 
 const firstPart = (input) => {};
