@@ -22,12 +22,7 @@ const combScore = {
 };
 
 const firstPart = (input) => {
-  let score = 0;
-
-  input.forEach((x) => {
-    score += combScore[x];
-  });
-  return score;
+  return input.reduce((a, b) => a + combScore[b], 0);
 };
 
 const moves = {
@@ -43,12 +38,7 @@ const moves = {
 };
 
 const secondPart = (input) => {
-  let score = 0;
-
-  input.forEach((x) => {
-    score += moves[x];
-  });
-  return score;
+  return input.reduce((a, b) => a + moves[b], 0);
 };
 
 const input = readFile();
