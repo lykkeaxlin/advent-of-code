@@ -10,8 +10,8 @@ const readFile = () => {
 };
 
 const calcPriority = (intersection) => {
-  const lower = "abcdefghijklmnopqrstuvwxyz";
-  const alphabet = lower + lower.toUpperCase();
+  const alphabet =
+    "abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".toUpperCase();
   let priority = 0;
 
   intersection.forEach((char) => {
@@ -21,10 +21,7 @@ const calcPriority = (intersection) => {
 };
 
 const intersection = (first, second) => {
-  const intersection = new Set(
-    [...first].filter((element) => second.has(element))
-  );
-  return intersection;
+  return new Set([...first].filter((element) => second.has(element)));
 };
 
 const firstPart = (input) => {
@@ -32,11 +29,11 @@ const firstPart = (input) => {
 
   input.forEach((line) => {
     const n = line.length;
-    const shared = intersection(
+    const intersection = intersection(
       new Set(line.slice(0, n / 2)),
       new Set(line.slice(n / 2, n))
     );
-    total += calcPriority(shared);
+    total += calcPriority(intersection);
   });
   return total;
 };
@@ -46,8 +43,8 @@ const secondPart = (input) => {
 
   for (var i = 0; i < input.length; i += 3) {
     const firstTwo = intersection(new Set(input[i]), new Set(input[i + 1]));
-    const shared = intersection(firstTwo, new Set(input[i + 2]));
-    total += calcPriority(shared);
+    const intersection = intersection(firstTwo, new Set(input[i + 2]));
+    total += calcPriority(intersection);
   }
   return total;
 };
