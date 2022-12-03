@@ -9,16 +9,13 @@ const readFile = () => {
     .split("\n");
 };
 
-const calcPriority = (sharedSubstring) => {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+const calcPriority = (intersection) => {
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const alphabet = lower + lower.toUpperCase();
   let priority = 0;
 
-  sharedSubstring.forEach((char) => {
-    if (alphabet.indexOf(char) !== -1) {
-      priority += alphabet.indexOf(char) + 1;
-    } else {
-      priority += alphabet.toUpperCase().indexOf(char) + 27;
-    }
+  intersection.forEach((char) => {
+    priority += alphabet.indexOf(char) + 1;
   });
   return priority;
 };
