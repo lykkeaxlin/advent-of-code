@@ -9,11 +9,15 @@ const readFile = () => {
     .split("\n");
 };
 
-const firstPart = (input) => {};
+const firstPart = (input) => {
+  input.forEach((element) => {
+    console.log(element);
+  });
+};
 
 const secondPart = (input) => {};
 
 const input = readFile();
 
-console.log("first");
-console.log("second");
+console.log("first:", firstPart(input));
+console.log("second:", secondPart(input));
