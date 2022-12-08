@@ -31,10 +31,13 @@ const hasNumber = (str) => {
 };
 
 const filterMax = (sums, max) => {
-  const filtered = Object.fromEntries(
-    Object.entries(sums).filter(([k, v]) => v <= max)
-  );
+  for (const [key, _] of Object.entries(sums)) {
+    const nestedPaths = getAllNestedPaths(sums, key);
+    const sumNested = Object.values(nestedPaths).reduce((a, b) => a + b, 0);
+    sums[key] += sumNested;
+  }
 
+  const filtered = Object.values(sums).filter((sum) => sum <= max);
   return Object.values(filtered).reduce((a, b) => a + b, 0);
 };
 
@@ -47,62 +50,31 @@ const parseDirs = (input) => {
       path = moveDir(path, element.split(" ")[2]);
     } else if (hasNumber(element.split(" ")[0])) {
       const size = element.split(" ")[0];
-      const fileName = element.split(" ")[1];
       if (path in dirs) {
-        const currentFiles = dirs[path];
-        currentFiles.push({ fileName, size });
+        dirs[path] += parseInt(size);
       } else {
-        dirs[path] = [{ fileName, size }];
+        dirs[path] = parseInt(size);
       }
     } else if (element.split(" ")[0] === "dir") {
       if (!(path in dirs)) {
-        dirs[path] = [];
+        dirs[path] = 0;
       }
     }
   });
   return dirs;
 };
 
-const calcSums = (dirs) => {
-  let sums = {};
-
-  for (const [key, value] of Object.entries(dirs)) {
-    sums[key] = 0;
-
-    value.forEach((v) => {
-      sums[key] += parseInt(v.size);
-    });
-  }
-
-  for (const [key, value] of Object.entries(sums)) {
-    const nestedPaths = getAllNestedPaths(sums, key);
-
-    const sumNested = Object.values(nestedPaths).reduce((a, b) => a + b, 0);
-    sums[key] += sumNested;
-  }
-  return sums;
-};
-
 const secondPart = (sums) => {
   const DISK_SPACE = 70000000;
   const UNUSED_SPACE = 30000000;
-
-  const space = UNUSED_SPACE - DISK_SPACE + sums["/"];
-
-  const candidates = Object.keys(sums).filter((dir) => sums[dir] >= space);
-  let min = total;
-
-  candidates.forEach((cand) => {
-    if (sums[cand] < min) {
-      min = sums[cand];
-    }
-  });
-  return min;
+  return Object.values(sums)
+    .filter((sum) => sum >= UNUSED_SPACE - DISK_SPACE + sums["/"])
+    .sort()
+    .reverse()[0];
 };
 
 const input = readFile();
 const dirs = parseDirs(input);
-const sums = calcSums(dirs);
 
-console.log("first:", filterMax(sums, 100000));
-console.log("second:", secondPart(sums));
+console.log("first:", filterMax(dirs, 100000));
+console.log("second:", secondPart(dirs));
