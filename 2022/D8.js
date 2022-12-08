@@ -51,7 +51,6 @@ const getLeftNeighbours = (i, j, n, matrix) => {
 
 const getRightNeighbours = (i, j, n, matrix) => {
   let neighbours = [];
-  let score = 0;
 
   for (var x = j + 1; x < n; x++) {
     neighbours.push(matrix[i][x]);
@@ -74,10 +73,8 @@ const isVisible = (i, j, n, matrix) => {
   );
 };
 
-const firstPart = (input) => {
+const firstPart = (matrix, n) => {
   let count = 0;
-  const matrix = parseMatrix(input);
-  const n = matrix.length;
   matrix.forEach((row, i) => {
     row.forEach((col, j) => {
       if (isVisible(i, j, n, matrix)) {
@@ -125,11 +122,9 @@ const getScore = (scores, top, bottom, left, right, current) => {
   scores.push(r * l * b * t);
 };
 
-const secondPart = (input) => {
+const secondPart = (matrix, n) => {
   let scores = [];
 
-  const matrix = parseMatrix(input);
-  const n = matrix.length;
   matrix.forEach((row, i) => {
     row.forEach((col, j) => {
       getScore(
@@ -146,6 +141,7 @@ const secondPart = (input) => {
 };
 
 const input = readFile();
+const matrix = parseMatrix(input);
 
-console.log("first:", firstPart(input));
-console.log("second:", secondPart(input));
+console.log("first:", firstPart(matrix, matrix.length));
+console.log("second:", secondPart(matrix, matrix.length));
