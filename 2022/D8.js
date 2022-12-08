@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-const test = true;
+const test = false;
 
 const readFile = () => {
   return fs
@@ -137,7 +137,7 @@ const secondPart = (matrix, n) => {
       );
     });
   });
-  return scores;
+  return Math.max(...scores);
 };
 
 const input = readFile();
