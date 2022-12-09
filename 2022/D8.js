@@ -85,41 +85,24 @@ const firstPart = (matrix, n) => {
   return count;
 };
 
-// refactor
+const getDirScore = (current, dirList) => {
+  let score = 0;
+  for (const x of dirList) {
+    score++;
+    if (x >= current) {
+      break;
+    }
+  }
+  return score;
+};
+
 const getScore = (scores, top, bottom, left, right, current) => {
-  let t = 0,
-    l = 0,
-    r = 0,
-    b = 0;
-
-  for (const x of top) {
-    t++;
-    if (x >= current) {
-      break;
-    }
-  }
-
-  for (const x of bottom) {
-    b++;
-    if (x >= current) {
-      break;
-    }
-  }
-
-  for (const x of left) {
-    l++;
-    if (x >= current) {
-      break;
-    }
-  }
-
-  for (const x of right) {
-    r++;
-    if (x >= current) {
-      break;
-    }
-  }
-  scores.push(r * l * b * t);
+  scores.push(
+    getDirScore(current, top) *
+      getDirScore(current, bottom) *
+      getDirScore(current, left) *
+      getDirScore(current, right)
+  );
 };
 
 const secondPart = (matrix, n) => {
