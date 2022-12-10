@@ -10,12 +10,12 @@ const readFile = () => {
 };
 
 const getSignalStrength = (values) => {
-  let x = [];
+  let strength = 0;
 
   for (var i = 20; i < values.length; i += 40) {
-    x.push(values[i] * i);
+    strength += values[i] * i;
   }
-  return x.reduce((a, b) => a + b, 0);
+  return strength;
 };
 
 const printCRT = (crt) => {
