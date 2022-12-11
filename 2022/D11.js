@@ -14,16 +14,16 @@ const createMonkeys = (input) => {
   const chunkSize = 7;
 
   for (let i = 0; i < input.length; i += chunkSize) {
-    let monkey = {};
     const chunk = input.slice(i, i + chunkSize);
-    monkey.startingItems = chunk[1].split(":")[1].split(",").map(Number);
-    monkey.op = chunk[2].split(" ")[6];
-    monkey.opVal = chunk[2].split(" ").slice(-1)[0];
-    monkey.test = parseInt(chunk[3].split(" ")[5]);
-    monkey.trueThrow = parseInt(chunk[4].split(" ").slice(-1)[0]);
-    monkey.falseThrow = parseInt(chunk[5].split(" ").slice(-1)[0]);
-    monkey.count = 0;
-    monkyes.push(monkey);
+    monkyes.push({
+      startingItems: chunk[1].split(":")[1].split(",").map(Number),
+      op: chunk[2].split(" ")[6],
+      opVal: chunk[2].split(" ").slice(-1)[0],
+      test: parseInt(chunk[3].split(" ")[5]),
+      trueThrow: parseInt(chunk[4].split(" ").slice(-1)[0]),
+      falseThrow: parseInt(chunk[5].split(" ").slice(-1)[0]),
+      count: 0,
+    });
   }
   return monkyes;
 };
