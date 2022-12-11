@@ -18,7 +18,7 @@ const createMonkeys = (input) => {
     const chunk = input.slice(i, i + chunkSize);
     monkey.startingItems = chunk[1].split(":")[1].split(",").map(Number);
     monkey.op = chunk[2].split(" ")[6];
-    monkey.opVal = chunk[2].split(" ")[7];
+    monkey.opVal = chunk[2].split(" ").slice(-1)[0];
     monkey.test = parseInt(chunk[3].split(" ")[5]);
     monkey.trueThrow = parseInt(chunk[4].split(" ").slice(-1)[0]);
     monkey.falseThrow = parseInt(chunk[5].split(" ").slice(-1)[0]);
@@ -29,10 +29,13 @@ const createMonkeys = (input) => {
 };
 
 const calcWorryLevel = (old, op, opVal) => {
-  if (op === "*") {
-    return isNaN(parseInt(opVal)) ? old * old : old * parseInt(opVal);
-  }
-  return isNaN(parseInt(opVal)) ? old + old : old + parseInt(opVal);
+  return op === "*"
+    ? isNaN(parseInt(opVal))
+      ? old * old
+      : old * parseInt(opVal)
+    : isNaN(parseInt(opVal))
+    ? old + old
+    : old + parseInt(opVal);
 };
 
 const getLevel = (monkeys) => {
