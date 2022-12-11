@@ -39,11 +39,12 @@ const calcWorryLevel = (old, op, opVal) => {
 };
 
 const getLevel = (monkeys) => {
-  const levels = monkeys
+  return monkeys
     .map((monkey) => monkey.count)
     .sort()
-    .reverse();
-  return levels[0] * levels[1];
+    .reverse()
+    .slice(0, 2)
+    .reduce((a, b) => a * b);
 };
 
 const firstPart = (input) => {
