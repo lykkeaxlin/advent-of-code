@@ -40,28 +40,25 @@ const calcWorryLevel = (old, op, opVal) => {
 
 const getLevel = (monkeys) => {
   return monkeys
-    .map((monkey) => monkey.count)
-    .sort()
-    .reverse()
+    .map((m) => m.count)
+    .sort((a, b) => b - a)
     .slice(0, 2)
-    .reduce((a, b) => a * b);
+    .reduce((a, b) => a * b, 1);
 };
 
-const firstPart = (input) => {
+const solve = (input, n) => {
   const monkeys = createMonkeys(input);
+  const mod = monkeys.map((monkey) => monkey.test).reduce((a, b) => a * b, 1);
 
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < n; i++) {
     monkeys.forEach((monkey) => {
       monkey.startingItems.forEach((item) => {
+        monkey.count++;
         let worryLevel = calcWorryLevel(item, monkey.op, monkey.opVal);
-        worryLevel = Math.floor(worryLevel / 3);
-        monkey.count += 1;
-
-        if (worryLevel % monkey.test === 0) {
-          monkeys[monkey.trueThrow].startingItems.push(worryLevel);
-        } else {
-          monkeys[monkey.falseThrow].startingItems.push(worryLevel);
-        }
+        worryLevel = n === 20 ? Math.floor(worryLevel / 3) : worryLevel % mod;
+        const throwTo =
+          worryLevel % monkey.test === 0 ? monkey.trueThrow : monkey.falseThrow;
+        monkeys[throwTo].startingItems.push(worryLevel);
       });
       monkey.startingItems = [];
     });
@@ -69,9 +66,7 @@ const firstPart = (input) => {
   return getLevel(monkeys);
 };
 
-const secondPart = (input) => {};
-
 const input = readFile();
 
-console.log("first:", firstPart(input));
-console.log("second:", secondPart(input));
+console.log("first:", solve(input, 20));
+console.log("second:", solve(input, 10000));
