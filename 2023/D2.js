@@ -25,29 +25,21 @@ const processRecords = (input, comparator) =>
     return record;
   });
 
-const calcFirstPart = (games, limits) =>
-  games
-    .filter((game) =>
-      Object.keys(limits).every((colour) => game[colour] <= limits[colour])
-    )
-    .reduce((total, _, index) => total + index + 1, 0);
-
 const firstPart = (input) => {
   const limits = { red: 12, green: 13, blue: 14 };
   const records = processRecords(input, (value, current) => value < current);
 
-  return calcFirstPart(records, limits);
+  return records.filter((game) =>
+    Object.keys(limits).every((colour) => game[colour] <= limits[colour])
+  );
 };
-
-const calcSecondPart = (records) =>
-  records
-    .map((obj) => Object.values(obj).reduce((acc, value) => acc * value, 1))
-    .reduce((acc, value) => acc + value, 0);
 
 const secondPart = (input) => {
   const records = processRecords(input, (value, current) => value > current);
 
-  return calcSecondPart(records);
+  return records
+    .map((obj) => Object.values(obj).reduce((acc, value) => acc * value, 1))
+    .reduce((acc, value) => acc + value, 0);
 };
 
 const input = readFile();
