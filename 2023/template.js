@@ -2,11 +2,10 @@ import { readFileSync } from "fs";
 
 const test = true;
 
-const readFile = () => {
-  return readFileSync(test ? "test.in" : "input.in")
+const readFile = () =>
+  readFileSync(test ? "test.in" : "input.in")
     .toString()
     .split("\n");
-};
 
 const firstPart = (input) => {};
 
