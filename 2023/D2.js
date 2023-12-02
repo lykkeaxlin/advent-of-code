@@ -9,14 +9,14 @@ const readFile = () => {
     .map((row) => row.split(":")[1].split(";"));
 };
 
-const processRecords = (input, comparator) =>
-  input.map((game) => {
-    const record = { blue: 0, red: 0, green: 0 };
+const processRecords = (input) =>
+  input.map((game, index) => {
+    const record = { blue: 0, red: 0, green: 0, index: index + 1 };
 
     game.forEach((hand) => {
       hand.split(",").map((x) => {
         const [value, colour] = x.trim().split(" ");
-        if (comparator(parseInt(value), record[colour])) {
+        if (parseInt(value) > record[colour]) {
           record[colour] = parseInt(value);
         }
       });
@@ -27,19 +27,17 @@ const processRecords = (input, comparator) =>
 
 const firstPart = (input) => {
   const limits = { red: 12, green: 13, blue: 14 };
-  const records = processRecords(input, (value, current) => value < current);
+  const records = processRecords(input);
 
-  return records.filter((game) =>
-    Object.keys(limits).every((colour) => game[colour] <= limits[colour])
-  );
+  return records
+    .filter((x) => Object.keys(limits).every((key) => x[key] <= limits[key]))
+    .reduce((acc, { index }) => acc + index, 0);
 };
 
 const secondPart = (input) => {
-  const records = processRecords(input, (value, current) => value > current);
+  const records = processRecords(input);
 
-  return records
-    .map((obj) => Object.values(obj).reduce((acc, value) => acc * value, 1))
-    .reduce((acc, value) => acc + value, 0);
+  return records.reduce((sum, { red, green, blue }) => sum + red * green * blue, 0);
 };
 
 const input = readFile();
