@@ -2,28 +2,17 @@ import { readFileSync } from "fs";
 
 const test = false;
 
-const readFile = () => {
-  return readFileSync(test ? "test.in" : "input.in")
+const readFile = () =>
+  readFileSync(test ? "test.in" : "input.in")
     .toString()
     .split("\n");
-};
 
-const getCalibrationValues = (array) => {
-  const [first, ...rest] = array;
-  const last = rest.pop() ?? first;
-  return parseInt(first + last);
-};
+const getValues = (array) => parseInt(array[0] + array[array.length - 1]);
 
-const sumArrayNumbers = (array) =>
-  array.reduce((acc, current) => acc + current, 0);
-
-const firstPart = (input) => {
-  const numbers = input.map((line) =>
-    getCalibrationValues(Array.from(line).filter((x) => !isNaN(x)))
-  );
-
-  return sumArrayNumbers(numbers);
-};
+const firstPart = (input) =>
+  input
+    .map((line) => getValues(Array.from(line).filter((x) => !isNaN(x))))
+    .reduce((acc, current) => acc + current, 0);
 
 const regex = /(?=(\d|one|two|three|four|five|six|seven|eight|nine))/g;
 
@@ -39,14 +28,11 @@ const wordToNumbers = {
   nine: "9",
 };
 
-const secondPart = (input) => {
-  const wordNumbers = input.map((i) => [...i.matchAll(regex)].map((x) => x[1]));
-  const numbers = wordNumbers.map((line) =>
-    getCalibrationValues(line.map((x) => wordToNumbers[x] ?? x))
-  );
-
-  return sumArrayNumbers(numbers);
-};
+const secondPart = (input) =>
+  input
+    .map((i) => [...i.matchAll(regex)].map((x) => x[1]))
+    .map((line) => getValues(line.map((x) => wordToNumbers[x] ?? x)))
+    .reduce((acc, current) => acc + current, 0);
 
 const input = readFile();
 
