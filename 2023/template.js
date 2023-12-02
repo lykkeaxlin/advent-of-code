@@ -1,10 +1,9 @@
-var fs = require("fs");
+import { readFileSync } from "fs";
 
 const test = true;
 
 const readFile = () => {
-  return fs
-    .readFileSync(test ? "test.in" : "input.in")
+  return readFileSync(test ? "test.in" : "input.in")
     .toString()
     .split("\n");
 };
